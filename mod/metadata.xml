@@ -3,7 +3,16 @@
 <metadata>
   <name>item-pool-filter-rep</name>
   <directory>item-pool-filter-rep</directory>
-  <description>item-pool-filter-rep is a currently a work in progress.</description>
+  <description>
+    Ban items from from the pool.
+
+[h1][b]Settings[/b][/h1]
+Use
+
+[h1][b]Commands[/b][/h1]
+[list]
+[*] Clear saved filter settings: [code]ipf clear[/code][/list]
+  </description>
   <version>1.0</version>
   <visibility />
 </metadata>
