@@ -27,8 +27,9 @@ const v: VariableData = {
   },
 };
 
-const ITEMS_MENU = "Item filters";
-const MOD_MENU = "Item Pool Filter";
+const INFO_MENU = "Info";
+const ITEMS_MENU = "Items";
+const MOD_MENU = "Item Pools Filter";
 
 export class ItemPoolFilter extends ModFeature {
   v = v;
@@ -86,16 +87,29 @@ export class ItemPoolFilter extends ModFeature {
 
   generateMenu(): void {
     if (typeof ModConfigMenu !== "undefined") {
+      // --------------------------------------- INFO MENU ---------------------------------------.
+      ModConfigMenu.AddText(MOD_MENU, INFO_MENU, "Ban an item to remove it");
       ModConfigMenu.AddText(
         MOD_MENU,
-        ITEMS_MENU,
-        "Ban an item to remove it from the pool for every character",
+        INFO_MENU,
+        "from the pool for every character",
       );
-      ModConfigMenu.AddText(
-        MOD_MENU,
-        ITEMS_MENU,
-        "Quit and Resume the run to apply the changes",
-      );
+      // Warning: no useful mod found.
+      if (!("EID" in _G) && !("XMLData" in _G) && !("Encyclopedia" in _G)) {
+        ModConfigMenu.AddSpace(MOD_MENU, ITEMS_MENU);
+        ModConfigMenu.AddText(
+          MOD_MENU,
+          INFO_MENU,
+          "Install EID or Encyclopedia,",
+        );
+        ModConfigMenu.AddText(MOD_MENU, INFO_MENU, "Repentogon for item names");
+        ModConfigMenu.AddSpace(MOD_MENU, ITEMS_MENU);
+      }
+      // Warning: restart to apply.
+      ModConfigMenu.AddText(MOD_MENU, INFO_MENU, "Quit and Resume the run");
+      ModConfigMenu.AddText(MOD_MENU, INFO_MENU, "to apply the changes");
+      // --------------------------------------- ITEMS MENU ---------------------------------------.
+      // Menu for Character vs Generic filters.
       let filterOnPlayer = false;
       const playerName = Isaac.GetPlayer(0).GetName();
       ModConfigMenu.AddSetting(MOD_MENU, ITEMS_MENU, {
@@ -119,6 +133,7 @@ export class ItemPoolFilter extends ModFeature {
         Type: ModConfigMenuOptionType.BOOLEAN,
       });
       ModConfigMenu.AddSpace(MOD_MENU, ITEMS_MENU);
+      // List of items.
       for (const item of this.collectibles) {
         ModConfigMenu.AddSetting(MOD_MENU, ITEMS_MENU, {
           CurrentSetting: () =>
